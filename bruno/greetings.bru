@@ -1,0 +1,15 @@
+meta {
+  name: greetings
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:8080/simple-greet
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
