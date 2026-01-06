@@ -32,5 +32,4 @@ FROM registry.access.redhat.com/ubi9/ubi-micro
 WORKDIR /helidon
 COPY --from=build /helidon/target/turbo-umbrella .
 ENTRYPOINT ["./turbo-umbrella"]
-USER nonroot:nonroot
 EXPOSE 8080
