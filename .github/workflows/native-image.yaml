@@ -27,8 +27,8 @@ jobs:
           context: .
           file: Dockerfile.native
           tags: |
-            ghcr.io/${{ github.repository_owner }}/turbo-umbrella:native-latest
-            ghcr.io/${{ github.repository_owner }}/turbo-umbrella:native-${{ github.sha }}
+            ghcr.io/${{ github.repository }}:native-latest
+            ghcr.io/${{ github.repository }}:native-${{ github.sha }}
           load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
