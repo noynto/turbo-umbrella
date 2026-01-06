@@ -28,12 +28,9 @@ RUN mvn package -Pnative-image -DskipTests
 RUN echo "done!"
 
 # 2nd stage, build the runtime image
-FROM scratch
+FROM gcr.io/distroless/base-debian12
 WORKDIR /helidon
-
-# Copy the binary built in the 1st stage
 COPY --from=build /helidon/target/turbo-umbrella .
-
 ENTRYPOINT ["./turbo-umbrella"]
-
+USER nonroot:nonroot
 EXPOSE 8080
