@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: turbo-umbrella
+  labels:
+    app: turbo-umbrella
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: turbo-umbrella
+  template:
+    metadata:
+      labels:
+        app: turbo-umbrella
+    spec:
+      containers:
+      - name: turbo-umbrella
+        image: ghcr.io/noynto/turbo-umbrella:latest
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /observe/health/live
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /observe/health/ready
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /observe/health/started
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        env:
+        - name: JAVA_OPTS
+          value: "-Xmx768m -Xms512m"
+---
