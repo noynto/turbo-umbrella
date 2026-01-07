@@ -2,12 +2,10 @@
 package me.noynto.turbo.umbrella;
 
 
-import io.helidon.logging.common.LogConfig;
 import io.helidon.config.Config;
+import io.helidon.logging.common.LogConfig;
 import io.helidon.webserver.WebServer;
 import io.helidon.webserver.http.HttpRouting;
-
-
 
 
 /**
@@ -25,10 +23,11 @@ public class Main {
 
     /**
      * Application main entry point.
+     *
      * @param args command line arguments.
      */
     public static void main(String[] args) {
-        
+
         // load logging configuration
         LogConfig.configureRuntime();
 
@@ -53,8 +52,10 @@ public class Main {
      * Updates HTTP Routing.
      */
     static void routing(HttpRouting.Builder routing) {
+        TransactionService transactionService = new PostgresTransactionService(null);
         routing
-               .register("/greet", new GreetService())
-               .get("/simple-greet", (req, res) -> res.send("Hello World!")); 
+                .register("/greet", new GreetService())
+                .register("/transactions", transactionService)
+                .get("/simple-greet", (req, res) -> res.send("Hello World!"));
     }
 }
