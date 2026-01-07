@@ -1,0 +1,19 @@
+meta {
+  name: Outil
+  type: http
+  seq: 3
+}
+
+get {
+  url: http://localhost:8080/observe/metrics?scope=vendor
+  body: none
+  auth: inherit
+}
+
+params:query {
+  scope: vendor
+}
+
+settings {
+  encodeUrl: true
+}
